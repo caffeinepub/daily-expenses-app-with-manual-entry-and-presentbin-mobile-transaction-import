@@ -1,2 +1,3 @@
-# daily-expenses-app-with-manual-entry-and-presentbin-mobile-transaction-import
-Exported from Caffeine project: Daily Expenses App with Manual Entry and Presentbin Mobile Transaction Import
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

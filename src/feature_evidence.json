@@ -1,0 +1,46 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-fix-the-internet-identity-login-flow-so-that-clicking-login-reliably-completes-authentication-and-updates-the-ui-into-the-authenticated-state-identity-is-set-and-the-app-proceeds-past-the-login-screen",
+      "featureTitle": "Fix the Internet Identity login flow so that clicking “Login” reliably completes authentication and updates the UI into the authenticated state (identity is set, and the app proceeds past the login screen).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/LoginButton.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-display-actionable-authentication-error-feedback-in-the-ui-when-login-fails-e-g-show-the-error-text-from-the-auth-hook-on-the-login-screen-and-near-the-header-login-button-using-english-user-facing-text",
+      "featureTitle": "Display actionable authentication error feedback in the UI when login fails (e.g., show the error text from the auth hook on the login screen and near the header Login button), using English user-facing text.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AuthErrorBanner.tsx",
+        "frontend/src/components/auth/LoginButton.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

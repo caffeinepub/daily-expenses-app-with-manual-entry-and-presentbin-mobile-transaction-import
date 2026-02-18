@@ -1,0 +1,86 @@
+{
+  "kind": "build_request",
+  "title": "Fix Internet Identity login and post-login authorization flow",
+  "projectName": "Daily Expenses",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "text": "Fix the Internet Identity login flow so that clicking “Login” reliably completes authentication and updates the UI into the authenticated state (identity is set, and the app proceeds past the login screen).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Login not working"
+        ]
+      },
+      "acceptanceCriteria": [
+        "From a fresh session, clicking the Login button opens the Internet Identity flow and returns to the app with a non-anonymous identity set in the auth context.",
+        "After a successful login, the app no longer renders the unauthenticated login screen and instead proceeds into the authenticated app experience.",
+        "If the Internet Identity provider URL/config is missing or invalid, the app shows a clear error message instead of silently failing."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Display actionable authentication error feedback in the UI when login fails (e.g., show the error text from the auth hook on the login screen and near the header Login button), using English user-facing text.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Login not working"
+        ]
+      },
+      "acceptanceCriteria": [
+        "If login fails, the user sees an on-screen error message indicating that login failed and (when available) the underlying error message.",
+        "The error message can be dismissed or is cleared on the next login attempt and on successful login.",
+        "No error details are only hidden in the console; the UI shows a human-readable message."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Ensure the authenticated backend actor initialization does not fail (or block the app) when no `caffeineAdminToken` is present in the URL/session, and ensure normal authenticated users can access their own profile and expense operations without requiring an admin token.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-7"
+        ],
+        "quotes": [
+          "Login not working"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Logging in without providing any `caffeineAdminToken` still results in a working authenticated session (actor is created successfully and core queries/mutations function).",
+        "Authenticated users can call `getCallerUserProfile`, `saveCallerUserProfile`, and expense CRUD/import methods for their own data without hitting an \"Unauthorized\" trap solely due to missing admin initialization.",
+        "If any admin-only initialization is attempted without a token, it is handled safely (e.g., skipped or handled without breaking the authenticated user flow), and the app remains usable."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo; only add backend/migration.mo if a state migration is strictly required.",
+    "Do not edit files under frontend/src/components/ui or any paths listed in frontend.immutablePaths; compose them instead.",
+    "Use English for any user-facing text."
+  ],
+  "nonGoals": [
+    "Adding new authentication providers beyond Internet Identity.",
+    "Implementing real-time features (WebSockets/chat) or third-party auth integrations.",
+    "Changing the app’s visual theme beyond what is necessary to present clear login/auth error states."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

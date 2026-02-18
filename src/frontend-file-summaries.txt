@@ -1,0 +1,20 @@
+{
+  "frontend/src/index.css": "Global styles with warm amber/emerald OKLCH color palette for light and dark modes, replacing default blue/purple theme with distinctive warm tones.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with Inter font family, custom shadow utilities, and OKLCH color system integration for the warm theme.",
+  "frontend/src/App.tsx": "Main application shell with Internet Identity authentication, proper anonymous principal checking, profile setup modal, and authentication error feedback on login screen with local state management for error visibility.",
+  "frontend/src/components/auth/LoginButton.tsx": "Login/logout button with integrated error display below the button, using local state to manage error visibility and clearing errors on retry or successful login.",
+  "frontend/src/components/auth/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup to collect display name, with close button hidden via CSS to prevent dismissal before completion.",
+  "frontend/src/hooks/useUserProfile.ts": "React Query hooks for fetching and saving user profiles with proper loading state management to prevent modal flash.",
+  "frontend/src/hooks/useExpenses.ts": "React Query hooks for all expense operations including fetch, add, delete, and Presentbin import with automatic cache invalidation.",
+  "frontend/src/pages/Dashboard.tsx": "Main dashboard with tabbed interface for Today/Day/Month views and Import panel, showing expense lists, totals, and manual entry form.",
+  "frontend/src/components/expenses/ManualExpenseForm.tsx": "Form component for adding manual expenses with validation, currency/category selection, and date/time inputs.",
+  "frontend/src/components/expenses/ExpenseList.tsx": "Table component displaying expense records with delete functionality, empty state illustration, and formatted data.",
+  "frontend/src/components/expenses/ExpenseTotals.tsx": "Component displaying expense totals grouped by currency with transaction count.",
+  "frontend/src/components/import/PresentbinImportPanel.tsx": "Import interface with paste/upload options, JSON parsing, transaction preview table, and import confirmation.",
+  "frontend/src/utils/dates.ts": "Date utility functions for formatting currency/datetime, calculating date ranges, and filtering expenses by date.",
+  "frontend/src/utils/presentbinParser.ts": "Parser for Presentbin JSON data with validation, error handling, and conversion to backend transaction format.",
+  "frontend/src/utils/fingerprint.ts": "Generates deterministic fingerprints for transactions to enable deduplication during import.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Internet Identity authentication provider with Promise-based login/logout, error state management with clearError function in the TypeScript interface, and validation of II provider configuration before login attempts.",
+  "frontend/src/hooks/useActor.ts": "Actor initialization hook that creates authenticated backend actors, with optional non-blocking admin initialization that only runs when caffeineAdminToken is provided and doesn't fail the user flow if it errors.",
+  "frontend/src/components/auth/AuthErrorBanner.tsx": "Reusable alert component for displaying authentication errors with dismiss functionality using shadcn Alert component."
+}

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Daily expenses tracking app focused on recording transactions via online sync from Presentbin Mobile and via manual entry.",
+  "architectural_notes": [],
+  "known_issues": [
+    "Login is not working (user reports inability to log in)."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-build-the-core-frontend-for-daily-expense-tracking-a-dashboard-that-shows-today-s-expenses-list-and-total-plus-navigation-to-view-expenses-by-day-month-and-a-form-to-add-a-manual-expense-amount-currency-category-date-time-note-merchant",
+      "title": "Build the core frontend for daily expense tracking: a dashboard that shows today's expenses list and total, plus navigation to view expenses by day/month and a form to add a manual expense (amount, currency, category, date/time, note/merchant).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-presentbin-mobile-online-transaction-import-flow-in-the-ui-that-allows-the-user-to-bring-transactions-into-the-app-using-a-user-provided-data-payload-e-g-paste-json-or-upload-a-file-provide-clear-ui-instructions-for-the-expected-fields-and-show-a-preview-before-importing",
+      "title": "Add a Presentbin Mobile “online transaction” import flow in the UI that allows the user to bring transactions into the app, using a user-provided data payload (e.g., paste JSON or upload a file). Provide clear UI instructions for the expected fields and show a preview before importing.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-distinctive-visual-theme-for-the-app-colors-typography-spacing-and-component-styling-and-apply-it-consistently-across-the-dashboard-expense-list-and-forms-avoid-a-blue-purple-default-palette",
+      "title": "Create a coherent, distinctive visual theme for the app (colors, typography, spacing, and component styling) and apply it consistently across the dashboard, expense list, and forms. Avoid a blue/purple default palette.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-to-the-frontend-and-use-them-in-the-ui-e-g-header-logo-area-and-an-empty-state-by-referencing-files-from-frontend-public-assets-generated",
+      "title": "Add generated static image assets to the frontend and use them in the UI (e.g., header/logo area and an empty state) by referencing files from frontend/public/assets/generated.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-internet-identity-login-flow-so-that-clicking-login-reliably-completes-authentication-and-updates-the-ui-into-the-authenticated-state-identity-is-set-and-the-app-proceeds-past-the-login-screen",
+      "title": "Fix the Internet Identity login flow so that clicking “Login” reliably completes authentication and updates the UI into the authenticated state (identity is set, and the app proceeds past the login screen).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-actionable-authentication-error-feedback-in-the-ui-when-login-fails-e-g-show-the-error-text-from-the-auth-hook-on-the-login-screen-and-near-the-header-login-button-using-english-user-facing-text",
+      "title": "Display actionable authentication error feedback in the UI when login fails (e.g., show the error text from the auth hook on the login screen and near the header Login button), using English user-facing text.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Build a daily expenses app with support for recording online transactions from Presentbin Mobile and manual expense entry.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement backend data models and persistent storage for a daily expenses tracker, scoped per authenticated user (Internet Identity principal). Store expense records with at least: id, amount, currency, category, note/merchant, transaction datetime, source (\"manual\" or \"presentbin\"), and created timestamp.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Implement backend endpoints to accept imported Presentbin Mobile transactions and convert them into expense records. Ensure idempotency options (e.g., prevent duplicates based on a deterministic fingerprint derived from transaction fields) and return an import summary (imported count, skipped duplicates, failed).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Ensure the authenticated backend actor initialization does not fail (or block the app) when no `caffeineAdminToken` is present in the URL/session, and ensure normal authenticated users can access their own profile and expense operations without requiring an admin token.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Daily Expenses App with Manual Entry and Presentbin Mobile Transaction Import",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

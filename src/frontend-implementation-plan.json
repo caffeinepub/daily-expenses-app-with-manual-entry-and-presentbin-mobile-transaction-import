@@ -1,0 +1,85 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Daily Expenses — Fix Internet Identity login and post-login authorization flow (frontend)",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "summary": "Make Internet Identity login reliably complete, set a non-anonymous identity, and transition the UI into the authenticated app state with clear config-missing errors.",
+      "acceptanceCriteria": [
+        "From a fresh session, clicking the Login button opens the Internet Identity flow and returns to the app with a non-anonymous identity set in the auth context.",
+        "After a successful login, the app no longer renders the unauthenticated login screen and instead proceeds into the authenticated app experience.",
+        "If the Internet Identity provider URL/config is missing or invalid, the app shows a clear error message instead of silently failing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Fix the login lifecycle to be reliably awaitable and UI-updating: change `login` to return a Promise, ensure `loginStatus`/`identity` transitions are consistent, clear any prior login error at the start of a new attempt, and validate the Internet Identity provider configuration (e.g., missing/invalid `II_URL`) to surface a user-facing error instead of failing silently. Use the selected `authorization` component guidance for Internet Identity session handling (Verify the component's usage instructions before implementing.)"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure the app transitions past the unauthenticated screen as soon as a non-anonymous identity is present; avoid any rendering paths that can keep the user stuck on the login screen after successful authentication. Keep UI text in English and continue to use the generated logo asset at frontend/public/assets/generated/expense-logo.dim_512x512.png."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "modify",
+          "description": "Update the Login button handler to correctly await the (Promise-based) `login()` and handle success/failure deterministically so the UI enters authenticated state after login completes. Use the selected `authorization` component login/logout best practices (e.g., clear cached data on logout) (Verify the component's usage instructions before implementing.)"
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Show actionable, dismissible authentication error feedback on the login screen and near the header Login button, and clear errors on retry/success.",
+      "acceptanceCriteria": [
+        "If login fails, the user sees an on-screen error message indicating that login failed and (when available) the underlying error message.",
+        "The error message can be dismissed or is cleared on the next login attempt and on successful login.",
+        "No error details are only hidden in the console; the UI shows a human-readable message."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Add/adjust auth-context behavior to support UI error feedback: expose a clear way to dismiss the current `loginError` (or clear it on the next login attempt), ensure errors are cleared on successful login, and ensure thrown/rejected errors propagate so UI can display them. Use the selected `authorization` component error-handling guidance for authorization/authentication failures (Verify the component's usage instructions before implementing.)"
+        },
+        {
+          "path": "frontend/src/components/auth/AuthErrorBanner.tsx",
+          "operation": "create",
+          "description": "Create a small reusable UI component to render an English, human-readable authentication error message (including underlying error text when available) with a dismiss action, without modifying any files under frontend/src/components/ui. (Compose existing UI primitives only if needed; Verify the component's usage instructions before implementing.)"
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "modify",
+          "description": "Render the authentication error feedback near the Login button (e.g., below/adjacent to the button) using the new AuthErrorBanner and the auth hook’s error state; ensure it clears on retry and on successful login. Use the selected `authorization` component guidance for showing human-readable auth errors (Verify the component's usage instructions before implementing.)"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Render actionable authentication error feedback on the unauthenticated login screen (and ensure header area feedback is visible) by wiring in the new AuthErrorBanner and/or passing through the auth error state; keep all user-facing text in English."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Prevent the authenticated actor setup from blocking normal users when no caffeineAdminToken is present by making admin-only initialization optional and non-fatal in the frontend.",
+      "acceptanceCriteria": [
+        "Logging in without providing any `caffeineAdminToken` still results in a working authenticated session (actor is created successfully and core queries/mutations function).",
+        "Authenticated users can call `getCallerUserProfile`, `saveCallerUserProfile`, and expense CRUD/import methods for their own data without hitting an \"Unauthorized\" trap solely due to missing admin initialization.",
+        "If any admin-only initialization is attempted without a token, it is handled safely (e.g., skipped or handled without breaking the authenticated user flow), and the app remains usable."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Make admin-token-based initialization optional and non-blocking: only attempt the admin initialization step when a non-empty `caffeineAdminToken` is available, and ensure any failures in that step do not prevent creating/returning a working authenticated actor for normal users. When initialization is skipped or fails, the app should remain usable for regular authenticated calls. Use the selected `authorization` component guidance around safe initialization flows and handling trap-like failures gracefully in the UI (Verify the component's usage instructions before implementing.)"
+        },
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Ensure logout/login transitions clear any cached/derived state that could cause actor initialization to rerun in a broken mode after an earlier admin-init failure (e.g., clear error state and allow re-login). Use the selected `authorization` component guidance to clear cached application data on logout (Verify the component's usage instructions before implementing.)"
+        }
+      ]
+    }
+  ]
+}
